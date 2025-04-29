@@ -1,0 +1,467 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
+
+/* Variables específicas para la paleta de colores requerida */
+:root {
+  --dark-gray: #262526;
+  --medium-gray: #7f8084;
+  --light-gray: #afb2b7;
+  --lighter-gray: #d7d8da;
+  --almost-white: #f3f3f3;
+}
+
+/* Estilos principales de la sección */
+.tecnologias-section {
+  background-color: #000;
+  color: var(--almost-white);
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 0;
+}
+
+/* Efectos de terminal CRT antiguos */
+.tech-scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    rgba(0, 0, 0, 0.05) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tech-noise {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAh1BMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD1fVgIAAAALHRSTlMAAQIEBQYHCAkWGBkaGxwdHh8oLzAxMjM0NTY3ODlmaXR1dnt8fX6AgYOFhrcN9IkAAAB8SURBVHhe7dQ1AQAAEACxSYwwwPbnLGz5cFn6AAAAAAAAALqN64SRRq8ThppUAZMqYFIFTKqASRVwqVwFXCpXgQqqQAVVoIIqUEEVqKAKVFAFKqgCFVSBCqpABVWggipQQRWooApUUAUqqAIVVIEKqkCFIuD8s9MR+AAA5zcDmX6gVwAAAABJRU5ErkJggg==");
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 1;
+  animation: tech-noise 0.5s infinite;
+}
+
+/* Terminal text efecto para encabezados */
+.terminal-text {
+  font-family: 'Press Start 2P', cursive;
+  color: var(--almost-white);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  position: relative;
+  text-shadow: 0 0 10px rgba(243, 243, 243, 0.7);
+  animation: terminal-flicker 5s infinite;
+}
+
+.terminal-text::after {
+  content: '_';
+  position: absolute;
+  right: -15px;
+  animation: cursor-blink 1.2s step-end infinite;
+}
+
+/* Líneas decorativas */
+.cyber-line {
+  height: 2px;
+  max-width: 200px;
+  background: linear-gradient(90deg, transparent, var(--almost-white), var(--almost-white), transparent);
+  margin: 0 auto;
+  position: relative;
+}
+
+.cyber-line::before {
+  content: '';
+  position: absolute;
+  height: 5px;
+  width: 20px;
+  background-color: var(--almost-white);
+  left: 50%;
+  transform: translateX(-50%);
+  top: -1.5px;
+  animation: cyber-line-pulse 2s infinite;
+}
+
+.category-line {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--medium-gray), transparent);
+  position: relative;
+}
+
+/* Descripciones con efecto terminal */
+.tech-desc {
+  font-family: 'VT323', monospace;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  line-height: 1.5;
+  text-shadow: 0 0 5px rgba(243, 243, 243, 0.3);
+}
+
+/* Encabezados de categorías */
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.category-title {
+  font-family: 'Silkscreen', cursive;
+  font-size: 1.5rem;
+  color: var(--almost-white);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  padding-right: 1rem;
+  text-shadow: 0 0 5px rgba(243, 243, 243, 0.5);
+}
+
+/* Tarjetas de tecnología */
+.tech-card {
+  background-color: rgba(38, 37, 38, 0.8);
+  border: 1px solid var(--medium-gray);
+  padding: 1.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.tech-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(243, 243, 243, 0.1), transparent);
+  z-index: 0;
+  transform: translateY(-100%);
+  transition: transform 0.5s ease;
+}
+
+.tech-card:hover::before {
+  transform: translateY(0);
+}
+
+.tech-card-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Esquinas decorativas */
+.corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  z-index: 2;
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+  border-top: 1px solid var(--light-gray);
+  border-left: 1px solid var(--light-gray);
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+  border-top: 1px solid var(--light-gray);
+  border-right: 1px solid var(--light-gray);
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid var(--light-gray);
+  border-left: 1px solid var(--light-gray);
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-bottom: 1px solid var(--light-gray);
+  border-right: 1px solid var(--light-gray);
+}
+
+/* Iconos de tecnologías */
+.tech-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.tech-icon {
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+.tech-card:hover .tech-icon {
+  transform: scale(1.1);
+  filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(243, 243, 243, 0.7));
+}
+
+/* Nombres de tecnologías */
+.tech-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  color: var(--almost-white);
+  text-shadow: 0 0 5px rgba(243, 243, 243, 0.3);
+}
+
+/* Barras de habilidad */
+.skill-bar-container {
+  margin-bottom: 1rem;
+}
+
+.skill-bar-wrapper {
+  height: 8px;
+  background-color: rgba(127, 128, 132, 0.3);
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--medium-gray), var(--almost-white));
+  position: relative;
+  transition: width 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.skill-level {
+  position: absolute;
+  right: 0;
+  top: -20px;
+  font-family: 'VT323', monospace;
+  font-size: 0.9rem;
+  color: var(--almost-white);
+}
+
+/* Barras de habilidad con efecto scanner */
+.skill-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 5px;
+  height: 100%;
+  background-color: rgba(243, 243, 243, 0.8);
+  box-shadow: 0 0 10px 2px rgba(243, 243, 243, 0.5);
+  animation: scanning 2s linear infinite;
+}
+
+/* Descripciones de tecnologías */
+.tech-description {
+  font-family: 'VT323', monospace;
+  font-size: 0.9rem;
+  color: var(--lighter-gray);
+  text-align: center;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.tech-card:hover .tech-description {
+  opacity: 1;
+}
+
+/* Sección de CTA */
+.tech-cta {
+  margin-top: 4rem;
+  padding: 2rem;
+  border: 1px dashed var(--medium-gray);
+  background-color: rgba(38, 37, 38, 0.5);
+  position: relative;
+}
+
+.tech-cta::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 1px dashed var(--medium-gray);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.tech-cta-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tech-cta-text p {
+  font-family: 'VT323', monospace;
+  font-size: 1.5rem;
+  white-space: nowrap;
+  color: var(--almost-white);
+}
+
+.cta-line {
+  height: 1px;
+  background-color: var(--medium-gray);
+  flex-grow: 1;
+  max-width: 100px;
+}
+
+/* Botón estilo tech */
+.tech-button {
+  position: relative;
+  background-color: transparent;
+  border: 1px solid var(--light-gray);
+  color: var(--almost-white);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.9rem;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s;
+  text-transform: uppercase;
+}
+
+.tech-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(243, 243, 243, 0.3), transparent);
+  transition: left 1s;
+}
+
+.tech-button:hover {
+  color: #000;
+  border-color: var(--almost-white);
+}
+
+.tech-button:hover::before {
+  left: 100%;
+}
+
+.tech-button-glitch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--almost-white);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+  z-index: -1;
+}
+
+.tech-button:hover .tech-button-glitch {
+  transform: scaleX(1);
+}
+
+/* Animaciones */
+@keyframes terminal-flicker {
+  0% {
+    opacity: 1;
+  }
+  3% {
+    opacity: 0.4;
+  }
+  6% {
+    opacity: 1;
+  }
+  7% {
+    opacity: 0.4;
+  }
+  8% {
+    opacity: 1;
+  }
+  9% {
+    opacity: 0.4;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes cursor-blink {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes cyber-line-pulse {
+  0%, 100% { opacity: 0.7; width: 20px; }
+  50% { opacity: 1; width: 40px; }
+}
+
+@keyframes scanning {
+  0% { left: -5px; }
+  100% { left: 100%; }
+}
+
+@keyframes tech-noise {
+  0%, 100% { background-position: 0 0; }
+  10% { background-position: 5px -5px; }
+  20% { background-position: -3px 2px; }
+  30% { background-position: 2px 5px; }
+  40% { background-position: -5px -2px; }
+  50% { background-position: 2px 8px; }
+  60% { background-position: -3px 4px; }
+  70% { background-position: 5px -4px; }
+  80% { background-position: -2px -7px; }
+  90% { background-position: 4px 3px; }
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .category-title {
+    font-size: 1.2rem;
+  }
+  
+  .terminal-text {
+    font-size: 2.5rem;
+  }
+  
+  .tech-cta-text {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .cta-line {
+    width: 50%;
+    max-width: none;
+  }
+  
+  .tech-card {
+    padding: 1rem;
+  }
+  
+  .tech-name {
+    font-size: 1rem;
+  }
+  
+  .tech-button {
+    font-size: 0.7rem;
+    padding: 0.75rem 1.5rem;
+  }
+}

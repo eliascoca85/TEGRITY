@@ -1,15 +1,21 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
 
 :root {
   --background: #000000;
   --foreground: #ffffff;
+  --arcade-font-primary: 'Press Start 2P', cursive;
+  --arcade-font-secondary: 'VT323', monospace;
+  --arcade-font-alt: 'Silkscreen', cursive;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--arcade-font-secondary);
+  --font-mono: var(--arcade-font-primary);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +28,86 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--arcade-font-secondary), Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--arcade-font-primary), Arial, Helvetica, sans-serif;
+  letter-spacing: 0.05em;
+}
+
+button, .button {
+  font-family: var(--arcade-font-primary), Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Animación de glitch para el header */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.animate-glitch {
+  animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both;
+}
+
+/* Animación fade-in para elementos */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Estilos pixelados para elementos que necesiten aspecto arcade */
+.pixel-borders {
+  image-rendering: pixelated;
+  border-style: solid;
+  border-width: 4px;
+  border-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"><path d="M0 0h1v1H0zm1 1h1v1H1zm1 0h1v-1h1v1h-1v1h-1z" fill="white"/></svg>') 2 repeat;
+}
+
+.pixel-text {
+  font-family: var(--arcade-font-alt);
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+}
+
+/* Cursor estilo arcade */
+.arcade-cursor {
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="4" height="4" fill="white"/><rect x="4" y="4" width="4" height="4" fill="white"/><rect x="8" y="8" width="4" height="4" fill="white"/></svg>') 8 8, auto;
 }

@@ -1,3 +1,8 @@
+/* Importando fuentes arcade */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
+
 /* Animaciones para el header */
 .loaded {
   animation: fade-in 0.5s ease-in-out forwards;
@@ -69,4 +74,403 @@
   opacity: 0;
   padding-top: 0;
   overflow: hidden;
+}
+
+/* Paleta de colores definida */
+:root {
+  --gray-medium: #afb2b7;
+  --gray-light: #d7d8da;
+  --gray-lightest: #f3f3f3;
+  --gray-dark: #262526;
+  --arcade-font-primary: 'Press Start 2P', cursive;
+  --arcade-font-secondary: 'VT323', monospace;
+  --arcade-font-alt: 'Silkscreen', cursive;
+}
+
+/* Estilos base del header con enfoque UI/UX */
+.modern-header {
+  background-color: #000000;
+  position: fixed;
+  width: 100%;
+  z-index: 50;
+  transition: all 0.3s ease-in-out;
+}
+
+.header-scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.92);
+  z-index: 999;
+}
+
+/* Contenedor principal con diseño moderno */
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  transition: padding 0.3s ease;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.header-scrolled .header-container {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+/* Logo con diseño UI/UX moderno y fuente arcade */
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.logo-text {
+  font-family: var(--arcade-font-primary);
+  font-weight: 400;
+  color: var(--gray-lightest);
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  position: relative;
+  transition: all 0.3s ease;
+  text-shadow: 2px 2px 0 var(--gray-dark);
+}
+
+.logo-separator {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background-color: var(--gray-light);
+  margin: 0 8px;
+  position: relative;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.logo-wrapper:hover .logo-separator {
+  transform: scale(1.2);
+  background-color: var(--gray-lightest);
+}
+
+/* Barra de navegación con diseño moderno */
+.nav-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2rem;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  font-family: var(--arcade-font-secondary);
+  color: #f3f3f3;
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+  position: relative;
+  letter-spacing: 0.05em;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--gray-lightest);
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: var(--gray-lightest);
+}
+
+.nav-link.active::after {
+  width: 100%;
+  background-color: var(--gray-lightest);
+}
+
+/* Botón CTA con diseño UI/UX avanzado y fuente arcade */
+.cta-button {
+  font-family: var(--arcade-font-primary);
+  background-color: transparent;
+  color: var(--gray-lightest);
+  border: 2px solid #f3f3f3;
+  border-radius: 10px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin-left: 1.5rem;
+  text-transform: uppercase;
+}
+
+.cta-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: rgba(175, 178, 183, 0.1);
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+.cta-button:hover {
+  border-color: var(--gray-lightest);
+  text-shadow: 0 0 5px rgba(243, 243, 243, 0.5);
+}
+
+.cta-button:hover::before {
+  width: 100%;
+}
+
+.cta-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(243, 243, 243, 0.3);
+}
+
+/* Menú móvil con diseño UI/UX moderno */
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+
+.toggle-line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--gray-light);
+  margin: 5px 0;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.menu-open .toggle-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-open .toggle-line:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-open .toggle-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #000000;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.86, 0, 0.07, 1), 
+              padding 0.4s cubic-bezier(0.86, 0, 0.07, 1),
+              box-shadow 0.4s ease;
+  box-shadow: none;
+}
+
+.mobile-menu.open {
+  max-height: 400px;
+  padding: 1rem 0;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 1rem 1.5rem;
+}
+
+.mobile-nav-item {
+  margin-bottom: 1rem;
+}
+
+.mobile-nav-item:last-child {
+  margin-bottom: 0;
+}
+
+.mobile-nav-link {
+  font-family: var(--arcade-font-secondary);
+  color: var(--gray-medium);
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 400;
+  display: block;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.mobile-nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--gray-lightest);
+  transition: width 0.3s ease;
+}
+
+.mobile-nav-link:hover {
+  color: var(--gray-lightest);
+}
+
+.mobile-nav-link:hover::after {
+  width: 100%;
+}
+
+.mobile-nav-link.active {
+  color: var(--gray-lightest);
+}
+
+.mobile-nav-link.active::after {
+  width: 100%;
+}
+
+.mobile-cta-button {
+  width: calc(100% - 3rem);
+  margin: 0.5rem 1.5rem;
+  text-align: center;
+}
+
+/* Indicador de progreso de scroll pixelado */
+.scroll-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background-color: var(--gray-lightest);
+  transition: width 0.1s ease;
+  z-index: 100;
+  clip-path: polygon(
+    0 0, 3px 0, 3px 3px, 6px 3px, 6px 0, 9px 0, 9px 3px,
+    /* Patrón repetido que crea el efecto pixelado */
+    100% 3px, 100% 0
+  );
+}
+
+/* Tooltip informativo para opciones del menú */
+.nav-tooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background-color: var(--gray-dark);
+  border: 1px solid var(--gray-medium);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0;
+  font-size: 0.7rem;
+  font-family: var(--arcade-font-secondary);
+  color: var(--gray-lightest);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.nav-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background-color: var(--gray-dark);
+  border-left: 1px solid var(--gray-medium);
+  border-top: 1px solid var(--gray-medium);
+}
+
+.nav-item:hover .nav-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Efectos de microinteracción */
+.micro-interaction {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.micro-interaction:active {
+  transform: scale(0.95);
+}
+
+
+
+.theme-icon {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--gray-medium);
+  position: relative;
+  transition: all 0.3s ease;
+  clip-path: polygon(
+    0 0, 4px 0, 4px 4px, 8px 4px, 8px 0, 12px 0, 12px 4px, 16px 4px, 16px 8px, 12px 8px, 12px 12px, 16px 12px, 16px 16px, 12px 16px, 12px 12px, 8px 12px, 8px 16px, 4px 16px, 4px 12px, 0 12px, 0 8px, 4px 8px, 4px 4px, 0 4px
+  );
+}
+
+.theme-icon::before {
+  content: "";
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  background-color: var(--gray-medium);
+  transition: all 0.3s ease;
+}
+
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .nav-wrapper {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+
+  .logo-text {
+    font-size: 0.75rem;
+  }
 }

@@ -1,114 +1,174 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import './styles.css'; // Importación de los estilos
+import './styles.css';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // Efecto para controlar el estado del scroll
+  const [activeSection, setActiveSection] = useState('home');
+  const scrollProgressRef = useRef(null);
+  
+  // Control del scroll y progreso
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const scrollPosition = window.scrollY;
+      setScrolled(scrollPosition > 50);
+      
+      // Actualizar barra de progreso
+      if (scrollProgressRef.current) {
+        const height = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = (scrollPosition / height) * 100;
+        scrollProgressRef.current.style.width = `${scrolled}%`;
+      }
     };
-
+    
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  // Detección de sección activa para la navegación
+  useEffect(() => {
+    const sections = ['home', 'servicios', 'proyectos', 'tecnologias', 'contacto'];
+    
+    const handleSectionChange = () => {
+      const scrollPosition = window.scrollY + 100;
+      
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (!element) continue;
+        
+        const offsetTop = element.offsetTop;
+        const offsetHeight = element.offsetHeight;
+        
+        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          setActiveSection(section);
+          break;
+        }
+      }
     };
+    
+    window.addEventListener('scroll', handleSectionChange);
+    return () => window.removeEventListener('scroll', handleSectionChange);
   }, []);
 
-  // Efecto para animación de carga inicial
+  // Estructura de navegación
+  const menuItems = [
+    { 
+      name: 'Servicios', 
+      path: '/servicios', 
+      id: 'servicios',
+      tooltip: 'Soluciones digitales para tu negocio'
+    },
+    { 
+      name: 'Proyectos', 
+      path: '/proyectos', 
+      id: 'proyectos',
+      tooltip: 'Casos de éxito y trabajos recientes'
+    },
+    { 
+      name: 'Tecnologías', 
+      path: '/tecnologias', 
+      id: 'tecnologias',
+      tooltip: 'Herramientas y frameworks que utilizamos'
+    },
+    { 
+      name: 'Contacto', 
+      path: '/contacto', 
+      id: 'contacto',
+      tooltip: 'Conecta con nuestro equipo'
+    }
+  ];
+  
+  // Cerrar el menú al hacer clic fuera de él
   useEffect(() => {
-    const header = document.getElementById('main-header');
-    setTimeout(() => {
-      header.classList.add('loaded');
-    }, 300);
-  }, []);
+    const handleClickOutside = (e) => {
+      if (menuOpen && !e.target.closest('.mobile-menu') && !e.target.closest('.mobile-toggle')) {
+        setMenuOpen(false);
+      }
+    };
+    
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [menuOpen]);
 
   return (
-    <header 
-      id="main-header" 
-      className={`fixed w-full z-50 transition-all duration-500 ease-in-out 
-        ${scrolled ? 'bg-black/80 backdrop-blur-md py-2' : 'bg-transparent py-4'}`}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="group flex items-center">
-              <span className="text-white font-bold text-2xl tracking-wider relative overflow-hidden group-hover:text-white/90 transition-colors text-glow">
-                <span className="inline-block transform transition-transform duration-500 group-hover:translate-y-full">TEGRITY</span>
-                <span className="absolute top-0 left-0 transform -translate-y-full group-hover:translate-y-0 transition-transform duration-500">TEGRITY</span>
-              </span>
-              <span className="ml-1 text-white font-bold text-2xl tracking-wider relative overflow-hidden group-hover:text-white/90 transition-colors text-glow">
-                <span className="inline-block transform transition-transform duration-500 group-hover:translate-y-full">- SOFT</span>
-                <span className="absolute top-0 left-0 transform -translate-y-full group-hover:translate-y-0 transition-transform duration-500">- SOFT</span>
-              </span>
-              <div className="ml-2 w-2 h-2 bg-white rounded-full animate-pulse soft-glow"></div>
-            </Link>
-          </div>
+    <header className={`modern-header ${scrolled ? 'header-scrolled' : ''}`}>
+      {/* Barra de progreso de scroll */}
+      <div ref={scrollProgressRef} className="scroll-progress " />
+      
+      <div className="header-container">
+        {/* Logo */}
+        <div className="logo-wrapper micro-interaction">
+          <Link href="/" className="flex items-center">
+            <span className="logo-text">TEGRITY</span>
+            <span className="logo-separator"></span>
+            <span className="logo-text">SOFT</span>
+          </Link>
+        </div>
 
-          {/* Navigation - Desktop */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {['Servicios', 'Proyectos', 'Tecnologías', 'Contacto'].map((item, index) => (
-              <Link
-                key={index}
-                href={`/${item.toLowerCase()}`}
-                className="header-link relative text-white/80 hover:text-white group py-1"
-              >
-                <span>{item}</span>
-              </Link>
+        {/* Navegación Desktop */}
+        <div className="nav-wrapper">
+          
+          
+          <ul className="nav-list">
+            {menuItems.map((item) => (
+              <li key={item.id} className="nav-item">
+                <Link
+                  href={item.path}
+                  className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+                >
+                  {item.name}
+                </Link>
+                {/* Tooltip informativo */}
+                <div className="nav-tooltip">
+                  {item.tooltip}
+                </div>
+              </li>
             ))}
-            
-            <button className="bg-transparent border border-white/20 text-white px-4 py-1 rounded-full hover:bg-white/10 transition-colors duration-300 flex items-center group">
-              <span>Consulta</span>
-              <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-            </button>
-          </nav>
-
-          {/* Hamburger Menu - Mobile */}
-          <button 
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden flex flex-col justify-center items-center w-8 h-8"
-          >
-            <span className={`bg-white h-[2px] w-6 mb-1 transform transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
-            <span className={`bg-white h-[2px] w-6 mb-1 transition-opacity duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-            <span className={`bg-white h-[2px] w-6 transform transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
+          </ul>
+          
+          <button className="cta-button micro-interaction">
+            Consulta
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        <div className={`md:hidden transition-all duration-500 ease-in-out ${menuOpen ? 'mobile-menu-open' : 'mobile-menu-closed'}`}>
-          <nav className="flex flex-col space-y-4 pb-4">
-            {['Servicios', 'Proyectos', 'Tecnologías', 'Contacto'].map((item, index) => (
-              <Link
-                key={index}
-                href={`/${item.toLowerCase()}`}
-                className="text-white/80 hover:text-white px-2 py-1"
-                onClick={() => setMenuOpen(false)}
-              >
-                {item}
-              </Link>
-            ))}
-            
-            <button className="bg-transparent border border-white/20 text-white px-4 py-2 rounded-full hover:bg-white/10 transition-colors duration-300 flex items-center justify-center mt-2">
-              <span>Consulta Gratuita</span>
-              <span className="ml-2">→</span>
-            </button>
-          </nav>
-        </div>
+        {/* Menú Móvil Toggle */}
+        <button 
+          className={`mobile-toggle ${menuOpen ? 'menu-open' : ''}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menú"
+          aria-expanded={menuOpen}
+        >
+          <span className="toggle-line"></span>
+          <span className="toggle-line"></span>
+          <span className="toggle-line"></span>
+        </button>
       </div>
 
-      {/* Animated Line */}
-      <div className={`h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent w-full opacity-50 ${scrolled ? 'opacity-30' : 'opacity-0'} transition-opacity duration-500`}></div>
-      
-      {/* Glowing dots for futuristic effect */}
-      <div className="absolute left-1/4 -bottom-1 w-1 h-1 bg-blue-400 rounded-full glow-dot hidden md:block"></div>
-      <div className="absolute left-2/4 -bottom-1 w-1 h-1 bg-purple-400 rounded-full glow-dot hidden md:block"></div>
-      <div className="absolute left-3/4 -bottom-1 w-1 h-1 bg-blue-400 rounded-full glow-dot hidden md:block"></div>
+      {/* Menú Móvil */}
+      <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
+        <ul className="mobile-nav-list">
+          {menuItems.map((item) => (
+            <li key={item.id} className="mobile-nav-item">
+              <Link
+                href={item.path}
+                className={`mobile-nav-link ${activeSection === item.id ? 'active' : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            </li>
+          ))}
+          
+          <li className="mobile-nav-item">
+            <button className="cta-button mobile-cta-button micro-interaction">
+              Consulta
+            </button>
+          </li>
+        </ul>
+      </div>
     </header>
   );
 }
